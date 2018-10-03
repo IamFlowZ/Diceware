@@ -1,7 +1,7 @@
 import os
 import random
 
-file_dir = 'C:\\Users\\Admin\\Desktop\\Diceware\\'
+file_dir = '' ## insert where you pulled the script too
 file_name = 'diceware.wordlist.txt'
 file_path = file_dir + file_name
 word_list = open(file_path)
