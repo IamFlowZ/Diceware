@@ -1,0 +1,13 @@
+##  Uncomment this to test string splitting
+
+#print("----------test string split----------")
+#org_str = my_list[250]
+#split_str = org_str.split()
+#print(org_str)
+#print("split string:")
+#for item in split_str:
+    #print(item)
+
+
+#for j in split_list.items(): ##Uncomment to test the spilt list
+    #print(j)
