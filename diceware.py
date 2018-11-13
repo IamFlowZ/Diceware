@@ -41,7 +41,6 @@ while(run):
             temp = val[1:(len(val))]
             m_temp = up + temp
             pwd += m_temp
-            #print(split_list[item])
 
         print(pwd)
         run = False
@@ -83,9 +82,7 @@ while run2:
     elif answer.lower() != 'y' or 'n':
         print("Please enter either yes or no.")
 
-    #run = False    
-    #run2 = False
-    #sys.exit()
+
 
 
 
