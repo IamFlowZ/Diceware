@@ -1,2 +1,24 @@
 # Diceware Python Script
-Simple Python script that generates a password in plaintext (meant to be ctrl+c, ctrl+v'd). Based on [Diceware](http://world.std.com/~reinhold/diceware.html).
+Simple Python script that outputs a string that _could_ be used for a password.
+Based on [Diceware](http://world.std.com/~reinhold/diceware.html).
+
+## Getting started
+* Clone this repository
+* do stuff
+
+## Prerequisites
+* Python 3.x>
+
+## Built with
+* [Python](https://www.python.org/) - The language we're boilerplating
+* [Pytest](https://docs.pytest.org/en/latest/) - The testing framework
+* [Pylint](https://www.pylint.org/) - The linting tool
+
+## Contributing
+Pull requests, issues. Whatever floats your boat
+
+## Authors
+* Dakota Lewallen [IamFlowz](https://gist.github.com/IamFlowZ/)
+
+## License
+MIT. 
