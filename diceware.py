@@ -11,15 +11,18 @@ import random
 import password
 
 my_parser = argparse.ArgumentParser(prog='diceware', description='''
-Create a passphrase based on the diceware standard.
-Use the "-i" flag to modify the password in real time.
-If you would rather have it output only once, run without the -i flag, and use the -n and/or -r flags instead.
-''')
+    Create a passphrase based on the diceware standard.
+    Use the "-i" flag to modify the password in real time.
+    If you would rather have it output only once, run without the -i flag, and use the -n and/or -r flags instead.
+    '''
+)
+
 my_parser.add_argument('-i', '--interactive', help='Interact with the password generation in realtime(OPTIONAL)', action='store_true')
 my_parser.add_argument('-n', '--num', type=int, help='Number of words to be concatanated.')
 my_parser.add_argument('-r', '--replace', type=str, help='Comma delimited list of characters to replace in output. Formatted like, \"original:replacement\"(e.g. a:@,A:^)')
 
 def get_num_words():
+    """ For use with interactive mode. Retrieves and validates input for target number of words. """
     print("With passwords, length > complexity.\nSo how many words would you like?\n")
     num_words = input()
     if num_words.isdecimal():
@@ -28,8 +31,8 @@ def get_num_words():
         print("Please enter how many words you would like in your password.")
         get_num_words()
 
-
 def make_changes(pswd):
+    """ For use with interactive mode. Retrieves and validates input for changing characters in the password. """
     print("Please enter the character you wish to change, a \":\" followed by the new character.")
     changes = input()
     if len(changes) > 1 and ':' in changes:
@@ -40,6 +43,7 @@ def make_changes(pswd):
         make_changes(pswd)
 
 def realtime_replace(pswd):
+    """ For use with interactive mode. Interactive mode event handler """
     print("Would you like to replace any of the other characters? (y/n)")
     answer = input()
     answer.strip()
