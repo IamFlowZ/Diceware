@@ -27,7 +27,7 @@ def test_generate_pswd():
     pswd.generate_pswd(num_words)
     assert len(pswd.password) >= 5
 
-@pytest.mark.skip(reason="not done")
+@pytest.mark.skip(reason="not done ")
 def test_replace_char():
     pswd = password.Password()
     pswd.generate_pswd()
