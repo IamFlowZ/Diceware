@@ -7,16 +7,22 @@ import pytest
 import password
 
 def test_retrieve_word_list(mocker):
-    """ simple test to check that wordlist is being populated """
+    """ check that wordlist is being populated """
     pswd = password.Password()
     assert len(pswd.word_list) > 0
 
+def test_no_sources(mocker):
+    """ fudging the path in order to simulate the file not exisiting. """
+    open_mock = mocker.patch('os.getcwd')
+    open_mock.return_value = '/'
+    try:
+        password.Password()
+    except FileNotFoundError as e:
+        assert e is not None
+
 def test_generate_pswd():
+    """ generated passwords should be at least as long as the number of words provided """
     num_words = 5
     pswd = password.Password()
     pswd.generate_pswd(num_words)
-    pattern = re.compile(r"[a-zA-Z0-9]\!\"$%&\(\)\*\+\-:;=\?@")
-    uppers = pattern.findall(pswd.password)
-    print(pswd.password)
-    print(uppers)
-    assert uppers is None
+    assert len(pswd.password) >= 5
