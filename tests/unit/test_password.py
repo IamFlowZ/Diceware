@@ -18,7 +18,7 @@ def test_no_sources(mocker):
     try:
         password.Password()
     except FileNotFoundError as e:
-        assert e is not None
+        assert str(e) == 'Please install the dicelist sources.'
 
 def test_generate_pswd():
     """ generated passwords should be at least as long as the number of words provided """
@@ -26,3 +26,8 @@ def test_generate_pswd():
     pswd = password.Password()
     pswd.generate_pswd(num_words)
     assert len(pswd.password) >= 5
+
+@pytest.mark.skip(reason="not done")
+def test_replace_char():
+    pswd = password.Password()
+    pswd.generate_pswd()

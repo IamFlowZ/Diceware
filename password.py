@@ -29,14 +29,17 @@ class Password():
     def retrieve_word_list(self):
         """ parse wordlist file into dictionary """
         split_list = {}
-        with open(os.path.join(os.getcwd(), 'sources', 'diceware.wordlist.txt')) as list_file:
-            for line in list_file.readlines():
-                pattern = re.compile(r"[\d]{5}")
-                result = pattern.match(line)
-                if result is not None and len(str(result)) > 0:
-                    key_value = tuple(line.split('\t'))
-                    split_list[key_value[0]] = key_value[1].replace('\n', '')
-        self.word_list = split_list
+        try:
+            with open(os.path.join(os.getcwd(), 'sources', 'diceware.wordlist.txt')) as list_file:
+                for line in list_file.readlines():
+                    pattern = re.compile(r"[\d]{5}")
+                    result = pattern.match(line)
+                    if result is not None and len(str(result)) > 0:
+                        key_value = tuple(line.split('\t'))
+                        split_list[key_value[0]] = key_value[1].replace('\n', '')
+            self.word_list = split_list
+        except FileNotFoundError:
+            raise(FileNotFoundError('Please install the dicelist sources.'))
 
     def generate_pswd(self, num_words):
         """ generates a new password """
