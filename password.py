@@ -30,8 +30,7 @@ class Password():
         """ parse wordlist file into dictionary """
         split_list = {}
         with open(os.path.join(os.getcwd(), 'sources', 'diceware.wordlist.txt')) as list_file:
-            word_list = list_file.readlines()
-            for line in word_list:
+            for line in list_file.readlines():
                 pattern = re.compile(r"[\d]{5}")
                 result = pattern.match(line)
                 if result is not None and len(str(result)) > 0:
@@ -51,10 +50,8 @@ class Password():
         pwd = ''
         for key in keys:
             val = self.word_list[key]
-            up = val[0].upper()
-            temp = val[1:(len(val))]
-            m_temp = up + temp
-            pwd += m_temp
+            upper_first_val = val[0].upper() + val[1:(len(val))] # Uppercasing the first letter in the value.
+            pwd += upper_first_val
 
         self.password = pwd
 
