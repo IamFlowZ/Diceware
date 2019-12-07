@@ -8,40 +8,16 @@ import argparse
 import re
 import random
 
-my_parser = argparse.ArgumentParser(prog='diceware', description='Create a passphrase based on the diceware standard.', epilog='Stay safe!')
+import password
+
+my_parser = argparse.ArgumentParser(prog='diceware', description='''
+Create a passphrase based on the diceware standard.
+Use the "-i" flag to modify the password in real time.
+If you would rather have it output only once, run without the -i flag, and use the -n and/or -r flags instead.
+''')
+my_parser.add_argument('-i', '--interactive', help='Interact with the password generation in realtime(OPTIONAL)', action='store_true')
 my_parser.add_argument('-n', '--num', type=int, help='Number of words to be concatanated.')
 my_parser.add_argument('-r', '--replace', type=str, help='Comma delimited list of characters to replace in output. Formatted like, \"original:replacement\"(e.g. a:@,A:^)')
-
-def retrieve_word_list():
-    """ parse wordlist file into dictionary """
-    split_list = {}
-    with open(os.path.join(os.getcwd(), 'sources', 'diceware.wordlist.txt')) as list_file:
-        word_list = list_file.readlines()
-        for line in word_list:
-            pattern = re.compile(r"[\d]{5}")
-            result = pattern.match(line)
-            if result is not None and len(str(result)) > 0:
-                key_value = tuple(line.split('\t'))
-                split_list[key_value[0]] = key_value[1].replace('\n', '')
-    return split_list
-
-def generate_keys(num_words):
-    keys = []
-    for _ in range(int(num_words)):
-        key = ''
-        for _ in range(5):
-            key += (str(random.randint(1,6)))
-        keys  = keys + [key]
-
-    pwd = ''
-    for key in keys:
-        val = split_list[key]
-        up = val[0].upper()
-        temp = val[1:(len(val))]
-        m_temp = up + temp
-        pwd += m_temp
-
-    return pwd
 
 def get_num_words():
     print("With passwords, length > complexity.\nSo how many words would you like?\n")
@@ -52,15 +28,13 @@ def get_num_words():
         print("Please enter how many words you would like in your password.")
         get_num_words()
 
-def replace_char(input, old, new):
-    return input.replace(old, new)
 
 def make_changes(pswd):
     print("Please enter the character you wish to change, a \":\" followed by the new character.")
     changes = input()
     if len(changes) > 1 and ':' in changes:
         new_vals = changes.split(':')
-        pswd = replace_char(pswd, new_vals[0], new_vals[1])
+        pswd.replace_char(new_vals[0], new_vals[1])
         return pswd
     else:
         make_changes(pswd)
@@ -74,7 +48,7 @@ def realtime_replace(pswd):
         return False
     elif answer.lower() == 'y' or answer.lower() == 'yes':
         pswd = make_changes(pswd)
-        print(f'Your current password:\t\033[92m{pswd}\033[0m')
+        print(f'Your current password:\t\033[92m{pswd.password}\033[0m')
         realtime_replace(pswd)
     else:
         print("Please enter either y(yes) or n(no).")
@@ -82,18 +56,21 @@ def realtime_replace(pswd):
 
 if __name__ == '__main__':
     args = my_parser.parse_args()
-    split_list = retrieve_word_list()
+    pswd = password.Password()
     if args.num is not None:
-        pswd = generate_keys(args.num)
+        pswd.generate_pswd(args.num)
+    elif args.interactive is True:
+        pswd.generate_pswd(get_num_words())
     else:
-        pswd = generate_keys(get_num_words())
+        print('\33[31mERROR\033[0m: Please either pass a number to the \"-n\" flag or set \"-i\" and try again. See \"diceware -h\" for more details.')
+        sys.exit(1)
 
     if args.replace is not None:
         replacements = args.replace.split(',')
         for replacement in replacements:
             new_vals = replacement.split(':')
-            pswd = replace_char(pswd, new_vals[0], new_vals[1])
-        print(f'Your current password:\t{pswd}')
-        realtime_replace(pswd)
-    else:
+            pswd.replace_char(new_vals[0], new_vals[1])
+
+    print(f'Your current password:\t\033[92m{pswd.password}\033[0m')
+    if args.interactive is True:
         realtime_replace(pswd)
