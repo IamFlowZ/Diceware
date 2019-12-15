@@ -1,3 +1,10 @@
 #!/bin/bash
 
-python3 -m pytest --cov=password --cov=diceware ./
+if [ -d "results" ]
+then
+    python3 -m pytest --cov=password --cov=diceware --cov=password ./ >> results/$(date +%F).test_result.txt
+else
+    mkdir results
+    python3 -m pytest --cov=password --cov=diceware --cov=password ./ >> results/$(date +%F).test.txt
+fi
+    
