@@ -30,7 +30,7 @@ class Password():
         """ parse wordlist file into dictionary """
         split_list = {}
         try:
-            with open(os.path.join(os.getcwd(), 'sources', 'diceware.wordlist.txt')) as list_file:
+            with open(os.path.join(os.getcwd(), 'sources', 'diceware.wordlist.asc')) as list_file:
                 for line in list_file.readlines():
                     pattern = re.compile(r"[\d]{5}")
                     result = pattern.match(line)

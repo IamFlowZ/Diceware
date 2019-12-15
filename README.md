@@ -5,6 +5,9 @@ Intended for use on Unix systems.
 
 ## Getting started
 * Clone this repository
+* ``` 
+    [terminal]$ chmod u+x scripts/run/*
+    [terminal]$ ./scripts/run/install
 * do stuff
 
 ## Prerequisites

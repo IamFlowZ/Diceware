@@ -1,0 +1,10 @@
+#!/bin/bash
+
+if [ -d "sources" ]
+then
+    wget http://world.std.com/%7Ereinhold/diceware.wordlist.asc -qO sources/diceware.wordlist.asc
+else
+    mkdir sources
+    wget http://world.std.com/%7Ereinhold/diceware.wordlist.asc -qO sources/diceware.wordlist.asc
+fi
+
